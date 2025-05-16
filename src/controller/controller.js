@@ -7,7 +7,7 @@ class CustomerController {
 
       if (!customers || customers.length == 0) {
         return res
-          .status(400)
+          .status(200)
           .json({ message: "Could not find users(no users)" });
       }
 
@@ -49,15 +49,15 @@ class CustomerController {
   async deleteCustomer(req, res) {
     try {
       const id = +req.params.id;
-      
+
       if (!id) {
         return req
           .status(400)
           .json({ message: "customer id is required to delete" });
       }
 
-      const deletedCustomer =  await CustomerModel.destroy({ where: { id } });
-      
+      const deletedCustomer = await CustomerModel.destroy({ where: { id } });
+
       if (deletedCustomer) {
         return res
           .status(200)
@@ -65,6 +65,22 @@ class CustomerController {
       }
 
       return res.status(404).json({ msg: "Customer not found" });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  async findOne(req, res) {
+    try {
+      const id = +req.params.id;
+
+      const customer = await CustomerModel.findOne({ where: { id } });
+
+      if(!customer){
+        return res.status(400).json({ msg: "Customer not found"})
+      }
+
+      return res.status(200).json({msg: "Customer found", data:customer})
     } catch (error) {
       console.log(error.message);
     }

@@ -4,6 +4,7 @@ const CustomerRouter = Router()
 
 CustomerRouter.get("/", CustomerController.findAll)
 CustomerRouter.post("/add", CustomerController.addCustomer)
-CustomerRouter.delete("/del/:id", CustomerController.deleteCustomer)
+CustomerRouter.delete("/delete/:id", CustomerController.deleteCustomer)
+CustomerRouter.get("/:id",CustomerController.findOne)
 
 export default CustomerRouter
